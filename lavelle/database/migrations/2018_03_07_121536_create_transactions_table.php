@@ -15,7 +15,15 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('customer_id')->unsigned();
+            $table->integer('item_id')->unsigned();
+            $table->integer('qty')->unsigned();
+            $table->double('total',10,2);
             $table->timestamps();
+
+            //foreign keys
+            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
         });
     }
 

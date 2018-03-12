@@ -15,7 +15,16 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('category_id')->unsigned(); //foreign with categories
+            $table->string('name');
+            $table->longText('desc');
+
+            //no negative price and stock
+            $table->double('price',10,2);
+            $table->integer('stock')->unsigned();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
