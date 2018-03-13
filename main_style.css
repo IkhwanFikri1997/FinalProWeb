@@ -9,10 +9,6 @@
   height: 80%;
 }
 
-.maincontent {
-  background-color: gray;
-}
-
 .footer {
   color: white;
   background-color: black;
@@ -59,3 +55,24 @@
   top: 480px;
   background-color: gray;
 }
+
+#transcart {
+    font-family: "Segoe UI", Helvetica, sans-serif;
+    width: 100%;
+}
+
+#transcart td, #transcart th {
+    border: 2px solid white;
+    padding: 10px;
+}
+
+#transcart tr:nth-child(even){background-color: silver;}
+
+#transcart tr:hover {background-color: gray;}
+
+#transcart th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: black;
+    color: white;
+}2
