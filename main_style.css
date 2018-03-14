@@ -56,6 +56,11 @@
   background-color: gray;
 }
 
+.backheader {
+  width: 100%;
+  height: auto;
+}
+
 #transcart {
     font-family: "Segoe UI", Helvetica, sans-serif;
     width: 100%;
