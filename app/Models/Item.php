@@ -4,9 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use Uuid;
 
 class Item extends Model
 {
+  public $incrementing = false;
+
+  protected static function boot()
+  {
+      parent::boot();
+      static::creating(function ($model) {
+          $model->id = (string)Uuid::generate();
+      });
+  }
+
   protected $table="items";
   protected $fillable=["category_id","name","desc","price","stock"];
   protected $guarded=[];
@@ -16,6 +27,6 @@ class Item extends Model
   }
 
   public function trans(){
-    return $this->hasMany("Apps\Models\Transaction");
+    return $this->hasMany("App\Models\Transaction");
   }
 }

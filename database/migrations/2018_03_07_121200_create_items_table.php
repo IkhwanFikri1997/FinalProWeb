@@ -14,17 +14,15 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('category_id')->unsigned(); //foreign with categories
+            $table->uuid('id')->primary();
+            $table->uuid('category_id'); //foreign with categories
             $table->string('name');
             $table->longText('desc');
 
             //no negative price and stock
-            $table->double('price',10,2);
+            $table->decimal('price',10,2)->unsigned();
             $table->integer('stock')->unsigned();
             $table->timestamps();
-
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

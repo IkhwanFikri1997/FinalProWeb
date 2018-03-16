@@ -127,7 +127,7 @@ class itemController extends Controller
 
     function itemByCat($id){
         try{
-          $data = Item::with('cats')->where('category_id', $id)->get();
+          $data = Category::with('items')->where('id', $id)->get();
         }catch (QueryException $a){
             return response()->json(["Error" => "not found"], 404);
         }

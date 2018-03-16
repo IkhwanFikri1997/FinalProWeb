@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 
 class userController extends Controller
@@ -42,7 +43,9 @@ class userController extends Controller
       $newStuff = [
         "name" => $request->name,
         "email" => $request->email,
-        "password" => $request->password
+        "password" => Hash::make($request->password),
+        "phone_num" => $request->phone_num,
+        "address" => $request->address
       ];
 
       try{
@@ -84,7 +87,9 @@ class userController extends Controller
       $newStuff = [
         "name" => $request->name,
         "email" => $request->email,
-        "password" => $request->password
+        "password" => Hash::make($request->password),
+        "phone_num" => $request->phone_num,
+        "address" => $request->address
       ];
       $pt = $request->id;
 
