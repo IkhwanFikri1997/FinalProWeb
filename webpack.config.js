@@ -2,7 +2,7 @@ let webpack = require('webpack');
 
 module.exports = {
     entry: [
-        './src/main.js'
+        './main.js'
     ],
     output: {
         path: "/dist/js",
