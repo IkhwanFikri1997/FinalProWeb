@@ -35,7 +35,7 @@ export default {
                 setTimeout(() => {
                     this.hide();
                 }
-            ), this.duration)
+            ), this.duration;
             }
         }
     }
