@@ -22,12 +22,14 @@ class itemController extends Controller
     {
       try {
         $data = $this->item->get();
+        $array = Array();
+        $array['data'] = $data;
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
 
       if(count($data)>0){
-        return response()->json($data);
+        return response()->json($array);
       }return response()->json(['error' => 'Nothing found'], 404);
     }
 
@@ -64,8 +66,23 @@ class itemController extends Controller
      */
     public function show($id)
     {
+
       try {
         $data = $this->item->where("id",$id)->get();
+      } catch (QueryException $e) {
+        return response()->json(['error' => "it screwed up"], 404);
+      }
+
+      if(count($data)>0){
+        return response()->json($data);
+      }return response()->json(['error' => 'Nothing found'], 404);
+    }
+
+    public function search($q)
+    {
+      $search = '%'.$q.'%';
+      try {
+        $data = $this->item->where("name","like",$search)->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
@@ -82,23 +99,30 @@ class itemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
+    public function update($id, Request $request)
+    {/*
       $newStuff = [
         "category_id" => $request->category_id,
         "name" => $request->name,
         "desc" => $request->desc,
         "price" => $request->price,
         "stock" => $request->stock
-      ];
-      $pt = $request->id;
+      ];*/
+
+      if(isset($request->category_id)) $newStuff ["category_id"] = $request->category_id;
+      if(isset($request->name)) $newStuff["name"] = $request->name;
+      if(isset($request->desc)) $newStuff["desc"] = $request->desc;
+      if(isset($request->price)) $newStuff["price"] = $request->price;
+      if(isset($request->stock)) $newStuff["stock"] = $request->stock;
+
+      $pt = $id;
 
       try{
         $data = $this->item->where("id",$pt)->update($newStuff);
-        return response()->json($data);
+        //return response()->json($data);
       }
       catch(QueryException $a){
-        return response()->json(["Error" => "not found"], 404);
+        return response()->json(["Error" => $a], 404);
       }
     }
 

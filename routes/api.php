@@ -24,28 +24,39 @@ Route::group([
     'prefix' => 'auth'
 
 ], function () {
+    Route::get('show', 'AuthController@show');
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    Route::post('register','Auth\RegisterController@validator');
 
 });
 
-//items
-Route::get("/getitems","itemController@index");
-Route::get("/getitem/{id}","itemController@show");
-Route::post("/additem","itemController@store");
-Route::post("/changeitem","itemController@update");
-Route::get("/delitem/{id}","itemController@destroy");
+Route::group([
+  'prefix'=>'item'
+],function(){
+    //items
+    Route::get("/get","itemController@index");
+    Route::get("/get/{id}","itemController@show");
+    Route::post("/add","itemController@store");
+    Route::post("/change/{id}","itemController@update");
+    Route::delete("/del/{id}","itemController@destroy");
+    Route::get("/search/{q}","itemController@search");
 
-Route::get("/itembycat/{id}","itemController@itemByCat");
+    Route::get("/itembycat/{id}","itemController@itemByCat");
+});
 
-//categories
-Route::get("/getcats","catController@index");
-Route::get("/getcat/{id}","catController@show");
-Route::post("/addcat","catController@store");
-Route::post("/changecat","catController@update");
-Route::get("/delcat/{id}","catController@destroy");
+Route::group([
+  'prefix'=>'cat'
+],function(){
+    //categories
+    Route::get("/get","catController@index");
+    Route::get("/get/{id}","catController@show");
+    Route::post("/add","catController@store");
+    Route::post("/changecat","catController@update");
+    Route::get("/delcat/{id}","catController@destroy");
+});
 
 //transaction
 Route::get("/getalltrans","transController@index");

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use User;
 
 class AuthController extends Controller
 {
@@ -78,5 +79,18 @@ class AuthController extends Controller
           'token_type' => 'bearer',
           'expires_in' => auth()->factory()->getTTL() * 60
       ]);
+    }
+
+    public function show()
+    {
+      try {
+        $data = Items::get(); //$this->users->get();
+      } catch (QueryException $e) {
+        return response()->json(['error' => "it screwed up"], 404);
+      }
+
+      if(count($data)>0){
+        return response()->json($data);
+      }return response()->json(['error' => 'Nothing found wkwkwk'], 404);
     }
 }

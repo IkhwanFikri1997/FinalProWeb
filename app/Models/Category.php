@@ -22,7 +22,7 @@ class Category extends Model
   protected $fillable=["name"];
   protected $guarded=[];
 
-  public function cats(){
+  public function items(){
     return $this->hasMany("App\Models\Item");
   }
 }

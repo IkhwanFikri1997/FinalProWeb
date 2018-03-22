@@ -40,14 +40,31 @@ class transController extends Controller
      */
     public function store(Request $request)
     {
-      $newStuff = [
-        "customer_id" => $request->customer_id,
-        "item_id" => $request->item_id,
-        "qty" => $request->qty,
-        "total" => $request->total
-      ];
+
+      $stk = Item::select('stock')->where('id',$request->item_id)->get();
+      $s=0;
+      foreach ($stk as $key => $value) {
+        $s = $value["stock"];
+      }
+      if($request->qty > $s){
+        return response()->json(["Error" => "not enough stock"], 404);
+      }
 
       try{
+        $prc = Item::select('price')->where('id',$request->item_id)->get();
+        $p=0;
+        foreach ($prc as $key => $value) {
+          $p = $value["price"];
+        }
+        $res = $request->qty * $p;
+
+        $newStuff = [
+          "customer_id" => $request->customer_id,
+          "item_id" => $request->item_id,
+          "qty" => $request->qty,
+          "total" => $res
+        ];
+
         $data = $this->transaction->create($newStuff);
         return response()->json($data);
       }

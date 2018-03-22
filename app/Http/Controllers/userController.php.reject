@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 
-class catController extends Controller
+class userController extends Controller
 {
-  public function __construct(Category $category){
-    $this->category = $category;
-  }
+    public function __construct(User $user){
+      $this->user = $user;
+    }
 
     /**
      * Display a listing of the resource.
@@ -19,17 +20,16 @@ class catController extends Controller
      */
     public function index()
     {
-      try {
-        $data = $this->category->get();
-        $array = Array();
-        $array['data'] = $data;
-      } catch (QueryException $e) {
-        return response()->json(['error' => "it screwed up"], 404);
-      }
+        try {
+          $data = $this->user->get();
+        } catch (QueryException $e) {
+          return response()->json(['error' => "it screwed up"], 404);
+        }
 
-      if(count($data)>0){
-        return response()->json($array);
-      }return response()->json(['error' => 'Nothing found'], 404);
+        if(count($data)>0){
+          return response()->json($data);
+        }return response()->json(['error' => 'Nothing found'], 404);
+
     }
 
     /**
@@ -41,12 +41,15 @@ class catController extends Controller
     public function store(Request $request)
     {
       $newStuff = [
-        "name" => $request->name
+        "name" => $request->name,
+        "email" => $request->email,
+        "password" => Hash::make($request->password),
+        "phone_num" => $request->phone_num,
+        "address" => $request->address
       ];
 
       try{
-        $data = $this->category->create($newStuff);
-        return response()->json($data);
+        $this->user->create($newStuff);
       }
       catch(QueryException $a){
         return response()->json(["Error" => "something missing"], 404);
@@ -62,7 +65,7 @@ class catController extends Controller
     public function show($id)
     {
       try {
-        $data = $this->category->where("id",$id)->get();
+        $data = $this->user->where("id",$id)->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
@@ -82,18 +85,22 @@ class catController extends Controller
     public function update(Request $request)
     {
       $newStuff = [
-        "name" => $request->name
+        "name" => $request->name,
+        "email" => $request->email,
+        "password" => Hash::make($request->password),
+        "phone_num" => $request->phone_num,
+        "address" => $request->address
       ];
       $pt = $request->id;
 
       try{
-        $this->category->where('id',$pt)->update($newStuff);
+        $this->user->where('id',$pt)->update($newStuff);
       }
       catch(QueryException $a){
         return response()->json(["Error" => "not found"], 404);
       }
 
-      if($data == 1){
+      if($data = 1){
         return response()->json(["updated"],200);
       }
       else{
@@ -110,7 +117,7 @@ class catController extends Controller
     public function destroy($id)
     {
       try{
-        $data = $this->category->where("id",$id)->delete();
+        $data = $this->user->where("id",$id)->delete();
       }
       catch(QueryException $a){
         return response()->json(["Error" => "not found"], 404);
