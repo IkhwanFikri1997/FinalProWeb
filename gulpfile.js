@@ -7,7 +7,7 @@ let copy = require('gulp-copy');
 
 // Run webpack
 gulp.task('webpack', function(){
-    return gulp.src('src/main.js')
+    return gulp.src('main.js')
         .pipe(webpack( require('./webpack.config.js') ))
         .pipe(gulp.dest('dist/js/'))
         .pipe(connect.reload());
@@ -23,7 +23,7 @@ gulp.task('webserver', function() {
 
 // Copy index.html file
 gulp.task('build.index', function(){
-    return gulp.src('./src/index.html')
+    return gulp.src('./index.html')
         .pipe(gulp.dest('./dist'));
 });
 
