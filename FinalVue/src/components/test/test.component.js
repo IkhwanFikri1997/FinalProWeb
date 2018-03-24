@@ -1,7 +1,7 @@
 import Operator from '../../utils/model/operator/index';
 
-import ItemModel from '../../models/user/item.model';
-import ItemService from '../../services/user/item.service';
+import ItemModel from '../../models/item/item.model.js';
+import ItemService from '../../services/items/items.services.js';
 
 import LoadingPanel from '../commons/loading-panel/loading-panel.common.vue';
 import ErrorPanel from '../commons/error-panel/error-panel.common.vue';

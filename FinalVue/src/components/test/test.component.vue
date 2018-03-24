@@ -82,4 +82,4 @@
     </div>
 </template>
 
-<script src="./user.component.js"></script>
+<script src="./test.component.js"></script>
