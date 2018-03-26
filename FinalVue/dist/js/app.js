@@ -16352,6 +16352,8 @@
 	  }, [_vm._v("Electronics")])])])])])])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('footer', [_c('div', {
+	    staticClass: "container"
+	  }, [_c('div', {
 	    staticClass: "row"
 	  }, [_c('div', {
 	    staticClass: "col-sm-2"
@@ -16422,7 +16424,7 @@
 	      "name": "complain",
 	      "value": ""
 	    }
-	  })])])])])
+	  })])])])])])
 	}]}
 	if (false) {
 	  module.hot.accept()
@@ -16818,13 +16820,13 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _itemModel = __webpack_require__(33);
+	var _categoriesModel = __webpack_require__(33);
 
-	var _itemModel2 = _interopRequireDefault(_itemModel);
+	var _categoriesModel2 = _interopRequireDefault(_categoriesModel);
 
-	var _itemsServices = __webpack_require__(34);
+	var _categoriesServices = __webpack_require__(34);
 
-	var _itemsServices2 = _interopRequireDefault(_itemsServices);
+	var _categoriesServices2 = _interopRequireDefault(_categoriesServices);
 
 	var _loadingPanelCommon = __webpack_require__(36);
 
@@ -16850,12 +16852,12 @@
 	        return {
 	            message: 'User Page',
 	            description: 'Manage list of users at this page.',
-	            userConfig: {
+	            categoryConfig: {
 	                loading: true,
 	                error: false
 	            },
-	            item: _itemModel2.default,
-	            items: []
+	            category: _categoriesModel2.default,
+	            categories: []
 	        };
 	    },
 	    mounted: function mounted() {
@@ -16866,46 +16868,46 @@
 	        bindUsers: function bindUsers() {
 	            var _this = this;
 
-	            this.userConfig.loading = true;
-	            this.userConfig.error = false;
+	            this.categoryConfig.loading = true;
+	            this.categoryConfig.error = false;
 
-	            _itemsServices2.default.fetch(this).then(function (res) {
-	                _this.items = _index2.default.map(UserModel, res.body.data);
-	                _this.userConfig.loading = false;
+	            _categoriesServices2.default.fetch(this).then(function (res) {
+	                _this.categories = _index2.default.map(_categoriesModel2.default, res.body.data);
+	                _this.categoryConfig.loading = false;
 	            }, function (err) {
-	                _this.userConfig.loading = false;
-	                _this.userConfig.error = true;
+	                _this.categoryConfig.loading = false;
+	                _this.categoryConfig.error = true;
 	            });
 	        },
 	        storeUser: function storeUser() {
 	            var _this2 = this;
 
-	            ItemService.store(this, this.item).then(function (res) {
-	                _this2.items.push(_index2.default.single(ItemModel, res.body.data));
-	                _this2.item = _index2.default.reset(ItemModel);
+	            _categoriesServices2.default.store(this, this.category).then(function (res) {
+	                _this2.categories.push(_index2.default.single(_categoriesModel2.default, res.body.data));
+	                _this2.category = _index2.default.reset(_categoriesModel2.default);
 	            }, function (err) {
 	                _this2.$refs.toast.setMessage('Error store user, check your user input again.');
 	                _this2.$refs.toast.show();
 	            });
 	        },
-	        deleteUser: function deleteUser(item) {
+	        deleteUser: function deleteUser(category) {
 	            var _this3 = this;
 
-	            ItemService.delete(this, item.id).then(function (res) {
-	                _this3.users.splice(_this3.users.indexOf(item), 1);
+	            _categoriesServices2.default.delete(this, category.id).then(function (res) {
+	                _this3.categories.splice(_this3.categories.indexOf(category), 1);
 	            }, function (err) {
 	                _this3.$refs.toast.setMessage('Error delete user');
 	                _this3.$refs.toast.show();
 	            });
 	        },
-	        editUser: function editUser(item) {
-	            this.items[this.items.indexOf(item)].onedit = true;
+	        editUser: function editUser(category) {
+	            this.categories[this.categories.indexOf(category)].onedit = true;
 	        },
-	        updateUser: function updateUser(item) {
+	        updateUser: function updateUser(category) {
 	            var _this4 = this;
 
-	            ItemService.update(this, item.id, item).then(function (res) {
-	                _this4.items[_this4.items.indexOf(item)].onedit = false;
+	            _categoriesServices2.default.update(this, category.id, category).then(function (res) {
+	                _this4.categories[_this4.categories.indexOf(category)].onedit = false;
 	            }, function (err) {
 	                _this4.$refs.toast.setMessage('Error update user');
 	                _this4.$refs.toast.show();
@@ -16925,7 +16927,7 @@
 	});
 	exports.default = {
 	    reset: function reset(model) {
-	        var response = {};
+	        var responses = {};
 
 	        for (var key in model) {
 	            if (typeof model[key] == "String") {
@@ -16938,17 +16940,17 @@
 	    },
 	    map: function map(model, data) {
 	        if (data.length <= 0) return;
-	        var responses = {};
+	        var responses = [];
 	        for (var i = 0; i < data.length; i++) {
 	            var raw = data[i];
-	            var response = {};
+	            var response = [];
 
 	            for (var key in model) {
 	                response[key] = raw[key];
 	            }
 	            response['onedit'] = false;
 
-	            response.push(response);
+	            responses.push(response);
 	        }
 
 	        return responses;
@@ -16961,7 +16963,7 @@
 	        }
 	        response['onedit'] = false;
 
-	        return responses;
+	        return response;
 	    }
 	};
 
@@ -16976,11 +16978,7 @@
 	});
 	exports.default = {
 	    id: null,
-	    category_id: null,
-	    name: '',
-	    desc: '',
-	    price: null,
-	    stock: null
+	    name: ''
 	};
 
 /***/ }),
@@ -17000,21 +16998,21 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = {
-	    url: _config2.default.api + '/item',
+	    url: _config2.default.api + '/cat',
 	    fetch: function fetch(y) {
-	        return y.$http.get(this.url);
+	        return y.$http.get(this.url + '/get');
 	    },
 	    find: function find(y, id) {
-	        return y.$http.get(this.url + '/' + id);
+	        return y.$http.get(this.url + '/get' + '/' + id);
 	    },
 	    store: function store(y, params) {
-	        return y.$http.post(this.url, params);
+	        return y.$http.post(this.url + '/add', params);
 	    },
 	    delete: function _delete(y, id) {
-	        return y.$http.delete(this.url + '/' + id);
+	        return y.$http.get(this.url + '/delcat' + '/' + id);
 	    },
 	    update: function update(y, id, params) {
-	        return y.$http.put(this.url + '/' + id, params);
+	        return y.$http.post(this.url + '/changecat', params);
 	    }
 	};
 
@@ -17623,77 +17621,29 @@
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (_vm.item.name),
-	      expression: "item.name"
+	      value: (_vm.category.name),
+	      expression: "category.name"
 	    }],
 	    staticClass: "form-control",
 	    attrs: {
 	      "type": "text",
-	      "placeholder": "Item Name",
+	      "placeholder": "Categories Name",
 	      "required": ""
 	    },
 	    domProps: {
-	      "value": (_vm.item.name)
+	      "value": (_vm.category.name)
 	    },
 	    on: {
 	      "input": function($event) {
 	        if ($event.target.composing) { return; }
-	        _vm.$set(_vm.item, "name", $event.target.value)
+	        _vm.$set(_vm.category, "name", $event.target.value)
 	      }
 	    }
-	  })]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group"
-	  }, [_c('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.item.desc),
-	      expression: "item.desc"
-	    }],
-	    staticClass: "form-control",
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "Item Description",
-	      "required": ""
-	    },
-	    domProps: {
-	      "value": (_vm.item.desc)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.$set(_vm.item, "desc", $event.target.value)
-	      }
-	    }
-	  })]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group"
-	  }, [_c('input', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.item.price),
-	      expression: "item.price"
-	    }],
-	    staticClass: "form-control",
-	    attrs: {
-	      "type": "text",
-	      "placeholder": "Item Price",
-	      "required": ""
-	    },
-	    domProps: {
-	      "value": (_vm.item.price)
-	    },
-	    on: {
-	      "input": function($event) {
-	        if ($event.target.composing) { return; }
-	        _vm.$set(_vm.item, "price", $event.target.value)
-	      }
-	    }
-	  })]), _vm._v(" "), _vm._m(1)])])])])])]), _vm._v(" "), (_vm.userConfig.loading && !_vm.userConfig.error) ? _c('loading-panel', {
+	  })]), _vm._v(" "), _vm._m(1)])])])])])]), _vm._v(" "), (_vm.categoryConfig.loading && !_vm.categoryConfig.error) ? _c('loading-panel', {
 	    attrs: {
 	      "message": "Fetch users from server"
 	    }
-	  }) : _vm._e(), _vm._v(" "), (!_vm.userConfig.loading && _vm.userConfig.error) ? _c('error-panel', {
+	  }) : _vm._e(), _vm._v(" "), (!_vm.categoryConfig.loading && _vm.categoryConfig.error) ? _c('error-panel', {
 	    attrs: {
 	      "message": "Failed fetch users from server"
 	    },
@@ -17702,7 +17652,7 @@
 	        _vm.bindUsers()
 	      }
 	    }
-	  }) : _vm._e(), _vm._v(" "), (!_vm.userConfig.loading && !_vm.userConfig.error) ? _c('div', {
+	  }) : _vm._e(), _vm._v(" "), (!_vm.categoryConfig.loading && !_vm.categoryConfig.error) ? _c('div', {
 	    staticClass: "row"
 	  }, [_c('div', {
 	    staticClass: "col-md-12"
@@ -17710,80 +17660,59 @@
 	    staticClass: "table-responsive"
 	  }, [_c('table', {
 	    staticClass: "table table-striped"
-	  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.items), function(item) {
-	    return _c('tr', [_c('td', {
+	  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.categories), function(category) {
+	    return _c('tr', {
+	      key: category.id
+	    }, [_c('td', {
 	      staticClass: "text-center"
-	    }, [_vm._v(_vm._s(_vm.user.id))]), _vm._v(" "), _c('td', {
+	    }, [_vm._v(_vm._s(category.id))]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [(!item.onedit) ? _c('span', [_vm._v(_vm._s(item.name))]) : _vm._e(), _vm._v(" "), (item.onedit) ? _c('input', {
+	    }, [(!category.onedit) ? _c('span', [_vm._v(_vm._s(category.name))]) : _vm._e(), _vm._v(" "), (category.onedit) ? _c('input', {
 	      directives: [{
 	        name: "model",
 	        rawName: "v-model",
-	        value: (item.name),
-	        expression: "item.name"
+	        value: (category.name),
+	        expression: "category.name"
 	      }],
 	      staticClass: "form-control",
 	      attrs: {
 	        "type": "text",
-	        "placeholder": "Item Name"
+	        "placeholder": "category Name"
 	      },
 	      domProps: {
-	        "value": (item.name)
+	        "value": (category.name)
 	      },
 	      on: {
 	        "input": function($event) {
 	          if ($event.target.composing) { return; }
-	          _vm.$set(item, "name", $event.target.value)
+	          _vm.$set(category, "name", $event.target.value)
 	        }
 	      }
 	    }) : _vm._e()]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [(!item.onedit) ? _c('span', [_vm._v(_vm._s(item.desc))]) : _vm._e(), _vm._v(" "), (item.onedit) ? _c('input', {
-	      directives: [{
-	        name: "model",
-	        rawName: "v-model",
-	        value: (item.desc),
-	        expression: "item.desc"
-	      }],
-	      staticClass: "form-control",
-	      attrs: {
-	        "type": "email",
-	        "placeholder": "Item Email"
-	      },
-	      domProps: {
-	        "value": (item.desc)
-	      },
-	      on: {
-	        "input": function($event) {
-	          if ($event.target.composing) { return; }
-	          _vm.$set(item, "desc", $event.target.value)
-	        }
-	      }
-	    }) : _vm._e()]), _vm._v(" "), _c('td', {
+	    }, [_vm._v(_vm._s(category.created_at))]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [_vm._v(_vm._s(item.created_at))]), _vm._v(" "), _c('td', {
+	    }, [_vm._v(_vm._s(category.updated_at))]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [_vm._v(_vm._s(item.updated_at))]), _vm._v(" "), _c('td', {
-	      staticClass: "text-center"
-	    }, [(!item.onedit) ? _c('button', {
+	    }, [(!category.onedit) ? _c('button', {
 	      staticClass: "btn btn-sm btn-success",
 	      attrs: {
 	        "type": "button"
 	      },
 	      on: {
 	        "click": function($event) {
-	          _vm.editUser(item)
+	          _vm.editUser(category)
 	        }
 	      }
-	    }, [_vm._v("Edit")]) : _vm._e(), _vm._v(" "), (item.onedit) ? _c('button', {
+	    }, [_vm._v("Edit")]) : _vm._e(), _vm._v(" "), (category.onedit) ? _c('button', {
 	      staticClass: "btn btn-sm btn-success",
 	      attrs: {
 	        "type": "button",
-	        "disabled": item.name == '' || item.email == ''
+	        "disabled": category.name == ''
 	      },
 	      on: {
 	        "click": function($event) {
-	          _vm.updateUser(item)
+	          _vm.updateUser(category)
 	        }
 	      }
 	    }, [_vm._v("Save")]) : _vm._e(), _vm._v(" "), _c('button', {
@@ -17793,7 +17722,7 @@
 	      },
 	      on: {
 	        "click": function($event) {
-	          _vm.deleteUser(item)
+	          _vm.deleteUser(category)
 	        }
 	      }
 	    }, [_vm._v("Del")])])])
@@ -17810,24 +17739,19 @@
 	    attrs: {
 	      "type": "submit"
 	    }
-	  }, [_vm._v("Create Item")])])
+	  }, [_vm._v("Create Categories")])])
 	},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('thead', [_c('tr', [_c('th', {
 	    staticClass: "text-center",
 	    staticStyle: {
 	      "width": "5%"
 	    }
-	  }, [_vm._v("#ID")]), _vm._v(" "), _c('th', {
+	  }, [_vm._v("ID")]), _vm._v(" "), _c('th', {
 	    staticClass: "text-center",
 	    staticStyle: {
 	      "width": "20%"
 	    }
 	  }, [_vm._v("Name")]), _vm._v(" "), _c('th', {
-	    staticClass: "text-center",
-	    staticStyle: {
-	      "width": "20%"
-	    }
-	  }, [_vm._v("description")]), _vm._v(" "), _c('th', {
 	    staticClass: "text-center",
 	    staticStyle: {
 	      "width": "20%"

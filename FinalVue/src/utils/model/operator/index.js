@@ -1,6 +1,6 @@
 export default {
     reset (model) {
-        let response = {};
+        let responses = {};
 
         for(let key in model) {
             if (typeof model[key] == "String") {
@@ -14,17 +14,17 @@ export default {
 
     map(model, data){
         if(data.length <= 0) return;
-        let responses= {};
+        let responses= [];
         for(let i=0; i < data.length; i++){
             let raw = data[i];
-            let response = {};
+            let response = [];
 
             for (let key in model){
                 response[key] = raw[key];
             }
             response['onedit'] = false;
 
-            response.push(response);
+            responses.push(response);
         }
 
         return responses;
@@ -38,6 +38,6 @@ export default {
         }
         response['onedit'] = false;
 
-        return responses;
+        return response;
     }
 }

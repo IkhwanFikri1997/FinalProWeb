@@ -81,6 +81,7 @@
         <router-view></router-view>
     </main>
     <footer>
+      <div class="container">
           <div class="row">
           <div class="col-sm-2">
             <h1 class="center" style="font-family: Calibri, sans-serif; width: 100%; border: 2px solid white;">Logo</h1>
@@ -112,6 +113,7 @@
               complain : <textarea class="black" type="text" name="complain" value="" style="height: 10%; width: 100%;"> </textarea>
             </form>
           </div>
+        </div>
         </div>
     </footer>
   </div>
