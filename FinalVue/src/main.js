@@ -4,8 +4,8 @@ import vue from 'vue';
 import Router from 'vue-router';
 import resource from 'vue-resource';
 
-Vue.use(router);
-Vue.use(resource);
+vue.use(Router);
+vue.use(resource);
 
 import appcomponent from './components/app.component.vue';
 import cartcomponent from './components/cart/cart.component.vue';
@@ -20,7 +20,7 @@ const routes = [
         path: '/',
         component: testcomponent
     }
-]
+];
 
 const router = new Router({
     routes: routes

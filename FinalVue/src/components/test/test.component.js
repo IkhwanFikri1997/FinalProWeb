@@ -1,7 +1,7 @@
 import Operator from '../../utils/model/operator/index';
 
-import ItemModel from '../../models/item/item.model.js';
-import ItemService from '../../services/items/items.services.js';
+import itemModel from '../../models/item/item.model.js';
+import itemService from '../../services/items/items.services.js';
 
 import LoadingPanel from '../commons/loading-panel/loading-panel.common.vue';
 import ErrorPanel from '../commons/error-panel/error-panel.common.vue';
@@ -30,13 +30,13 @@ export default {
     },
     methods: {
         bindUsers() {
-            this.itemConfig.loading = true;
-            this.itemConfig.error = false;
+            this.userConfig.loading = true;
+            this.userConfig.error = false;
 
-            UserService.fetch(this)
+            itemService.fetch(this)
                 .then(
                     res => {
-                        this.users = Operator.map(UserModel, res.body.data);
+                        this.items = Operator.map(UserModel, res.body.data);
                         this.userConfig.loading = false;
                     },
                     err => {
@@ -46,11 +46,11 @@ export default {
                 );
         },
         storeUser() {
-            UserService.store(this, this.user)
+            ItemService.store(this, this.item)
                 .then(
                     res => {
-                        this.users.push(Operator.single(UserModel, res.body.data));
-                        this.user = Operator.reset(UserModel);
+                        this.items.push(Operator.single(ItemModel, res.body.data));
+                        this.item = Operator.reset(ItemModel);
                     },
                     err => {
                         this.$refs.toast.setMessage('Error store user, check your user input again.');
@@ -59,7 +59,7 @@ export default {
                 )
         },
         deleteUser(item) {
-            UserService.delete(this, user.id)
+            ItemService.delete(this, item.id)
                 .then(
                     res => {
                         this.users.splice(this.users.indexOf(item), 1);
@@ -74,10 +74,10 @@ export default {
             this.items[this.items.indexOf(item)].onedit = true;
         },
         updateUser(item) {
-            UserService.update(this, item.id, user)
+            ItemService.update(this, item.id, item)
                 .then(
                     res => {
-                        this.items[this.users.indexOf(item)].onedit = false;
+                        this.items[this.items.indexOf(item)].onedit = false;
                     },
                     err => {
                         this.$refs.toast.setMessage('Error update user');
