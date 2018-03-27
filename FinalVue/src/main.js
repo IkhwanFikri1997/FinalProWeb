@@ -1,4 +1,4 @@
-import scss from './assets/stylesheets/app.scss';
+//import scss from './assets/stylesheets/app.scss';
 
 import vue from 'vue';
 import Router from 'vue-router';
@@ -19,6 +19,22 @@ const routes = [
     {
         path: '/',
         component: testcomponent
+    },
+    {
+        path: '/cart',
+        component: cartcomponent
+    },
+    {
+        path: '/store',
+        component: storecomponent
+    },
+    {
+        path: '/login',
+        component: logincomponent
+    },
+    {
+        path: '/register',
+        component: registercomponent
     }
 ];
 

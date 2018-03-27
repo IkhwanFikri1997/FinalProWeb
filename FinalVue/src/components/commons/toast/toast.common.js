@@ -34,8 +34,7 @@ export default {
             if(this.config.show) {
                 setTimeout(() => {
                     this.hide();
-                }
-            ), this.duration;
+                }, this.duration)
             }
         }
     }

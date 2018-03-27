@@ -1,9 +1,9 @@
 export default {
     reset (model) {
-        let responses = {};
+        let response = {};
 
         for(let key in model) {
-            if (typeof model[key] == "String") {
+            if (typeof model[key] == 'String') {
                 model[key] = '';
             } else {
                 model[key] = null;
@@ -17,7 +17,7 @@ export default {
         let responses= [];
         for(let i=0; i < data.length; i++){
             let raw = data[i];
-            let response = [];
+            let response = {};
 
             for (let key in model){
                 response[key] = raw[key];

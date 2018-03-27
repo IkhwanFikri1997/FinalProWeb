@@ -13,11 +13,11 @@
             				<li><a href="#">Book</a></li>
             				<li><a href="#">Shop</a></li>
            					<li class="add-gutter-top"><input type="text" name="searchbar"  class="form-control"></li>
-                  			<li class="add-gutter-top"><button type="submit" class="btn btn-default">Search</button></li>
+                  	<li class="add-gutter-top"><button type="submit" class="btn btn-default">Search</button></li>
          			 	</ul>
           				<ul class="nav navbar-nav navbar-right">
-           					<li><a href="#">Sign up</a></li>
-            				<li><a href="#">Log In</a></li>
+           					<li><router-link to="/register">Sign up</router-link></li>
+            				<li><router-link to="/login">Log In</router-link></li>
           				</ul>
         			</div>
         		</div>

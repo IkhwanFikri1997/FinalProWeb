@@ -5,4 +5,27 @@
     width: 100%;
     height: 80px;
     z-index: 99999;
+    padding: 15px;
+    transform: translateY(-150px);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+[toast] .wrapper-active {
+    transform: translateY(0px);
+}
+
+[toast] .message {
+    background: #222222;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 300px;
+    height: auto;
 }
