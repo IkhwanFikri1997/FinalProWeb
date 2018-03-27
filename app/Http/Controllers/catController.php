@@ -45,7 +45,7 @@ class catController extends Controller
       ];
 
       try{
-        $data = $this->category->create($newStuff);
+        $data['data'] = $this->category->create($newStuff);
         return response()->json($data);
       }
       catch(QueryException $a){
@@ -79,24 +79,16 @@ class catController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
       $newStuff = [
         "name" => $request->name
       ];
-      $pt = $request->id;
 
       try{
-        $this->category->where('id',$pt)->update($newStuff);
+        $this->category->where('id',$id)->update($newStuff);
       }
       catch(QueryException $a){
-        return response()->json(["Error" => "not found"], 404);
-      }
-
-      if($data == 1){
-        return response()->json(["updated"],200);
-      }
-      else{
         return response()->json(["Error" => "not found"], 404);
       }
     }
@@ -113,13 +105,6 @@ class catController extends Controller
         $data = $this->category->where("id",$id)->delete();
       }
       catch(QueryException $a){
-        return response()->json(["Error" => "not found"], 404);
-      }
-
-      if($data == 1){
-        return response()->json(["deleted"],200);
-      }
-      else{
         return response()->json(["Error" => "not found"], 404);
       }
     }

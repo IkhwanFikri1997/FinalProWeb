@@ -51,7 +51,9 @@ class itemController extends Controller
 
       try{
         $data = $this->item->create($newStuff);
-        return response()->json($data);
+        $array = Array();
+        $array['data'] = $data;
+        return response()->json($array);
       }
       catch(QueryException $a){
         return response()->json(["Error" => "it screwed up"], 404);
@@ -115,10 +117,8 @@ class itemController extends Controller
       if(isset($request->price)) $newStuff["price"] = $request->price;
       if(isset($request->stock)) $newStuff["stock"] = $request->stock;
 
-      $pt = $id;
-
       try{
-        $data = $this->item->where("id",$pt)->update($newStuff);
+        $data = $this->item->where("id",$id)->update($newStuff);
         //return response()->json($data);
       }
       catch(QueryException $a){
@@ -151,13 +151,14 @@ class itemController extends Controller
 
     function itemByCat($id){
         try{
-          $data = Category::with('items')->where('id', $id)->get();
+          $array = array();
+          $array['data'] = Category::with('items')->where('id', $id)->get();
         }catch (QueryException $a){
             return response()->json(["Error" => "not found"], 404);
         }
 
         if(count($data) > 0){
-            return response()->json($data);
+            return response()->json($array);
         }else{
             return response()->json(["Error" => "not found"], 404);
         }

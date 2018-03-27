@@ -29,7 +29,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    Route::post('register','Auth\RegisterController@validator');
+    Route::post('register','Auth\RegisterController@create');
 
 });
 
@@ -54,16 +54,20 @@ Route::group([
     Route::get("/get","catController@index");
     Route::get("/get/{id}","catController@show");
     Route::post("/add","catController@store");
-    Route::post("/changecat","catController@update");
-    Route::get("/delcat/{id}","catController@destroy");
+    Route::post("/change/{id}","catController@update");
+    Route::delete("/del/{id}","catController@destroy");
 });
 
+Route::group([
+  'prefix'=>'trans'
+],function(){
 //transaction
-Route::get("/getalltrans","transController@index");
-Route::get("/gettrans/{id}","transController@show");
-Route::post("/addtrans","transController@store");
-Route::post("/changetrans","transController@update");
-Route::get("/deltrans/{id}","transController@destroy");
+Route::get("/get","transController@index");
+Route::get("/get/{id}","transController@show");
+Route::post("/add","transController@store");
+Route::post("/change/{id}","transController@update");
+Route::delete("/del/{id}","transController@destroy");
 
 Route::get("/bill/{cust_id}/{item_id}","transController@subtotal");
 Route::get("/bill/{cust_id}","transController@printBill");
+});

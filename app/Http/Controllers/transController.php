@@ -22,7 +22,7 @@ class transController extends Controller
     public function index()
     {
       try {
-        $data = $this->transaction->get();
+        $data['data'] = $this->transaction->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
@@ -65,7 +65,7 @@ class transController extends Controller
           "total" => $res
         ];
 
-        $data = $this->transaction->create($newStuff);
+        $data['data'] = $this->transaction->create($newStuff);
         return response()->json($data);
       }
       catch(QueryException $a){
@@ -82,7 +82,7 @@ class transController extends Controller
     public function show($id)
     {
       try {
-        $data = $this->transaction->where("id",$id)->get();
+        $data['data'] = $this->transaction->where("id",$id)->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
@@ -99,7 +99,7 @@ class transController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
       $newStuff = [
         "customer_id" => $request->customer_id,
@@ -109,7 +109,7 @@ class transController extends Controller
       ];
 
       try{
-        $data = $this->transaction->update($newStuff);
+        $data = $this->transaction->where('id',$id)->update($newStuff);
         //response()->json($data);
       }
       catch(QueryException $a){
@@ -144,7 +144,7 @@ class transController extends Controller
     {
       try {
         $conditions = ['customer_id'=>$cust_id , 'item_id'=>$item_id];
-        $data = Transaction::with('customersrc','itemsrc')->where($conditions)->get();
+        $data['data'] = Transaction::with('customersrc','itemsrc')->where($conditions)->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
@@ -158,7 +158,7 @@ class transController extends Controller
     {
       try {
         $conditions = ['customer_id'=>$cust_id];
-        $data = Transaction::with('customersrc','itemsrc')->where($conditions)->get();
+        $data['data'] = Transaction::with('customersrc','itemsrc')->where($conditions)->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }
