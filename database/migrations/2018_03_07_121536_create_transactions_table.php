@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('customer_id');
+            $table->uuid('bill_id');
             $table->uuid('item_id');
             $table->integer('qty')->unsigned();
             $table->decimal('total',10,2)->unsigned();

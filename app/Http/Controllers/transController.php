@@ -12,6 +12,7 @@ class transController extends Controller
 {
   public function __construct(Transaction $transaction){
     $this->transaction = $transaction;
+    //$this->middleware('auth:api', ['except' => ['index']]);
   }
 
     /**
@@ -59,7 +60,7 @@ class transController extends Controller
         $res = $request->qty * $p;
 
         $newStuff = [
-          "customer_id" => $request->customer_id,
+          "bill_id" => $request->bill_id,
           "item_id" => $request->item_id,
           "qty" => $request->qty,
           "total" => $res
@@ -102,7 +103,7 @@ class transController extends Controller
     public function update($id,Request $request)
     {
       $newStuff = [
-        "customer_id" => $request->customer_id,
+        "bill_id" => $request->bill_id,
         "item_id" => $request->item_id,
         "qty" => $request->qty,
         "total_price" => $request->total_price
@@ -154,11 +155,11 @@ class transController extends Controller
       }return response()->json(['error' => 'Nothing found'], 404);
     }
 
-    public function printBill($cust_id)
+    public function printBill($bill_id)
     {
       try {
-        $conditions = ['customer_id'=>$cust_id];
-        $data['data'] = Transaction::with('customersrc','itemsrc')->where($conditions)->get();
+        $conditions = ['bill_id'=>$bill_id];
+        $data['data'] = Transaction::with('billsrc','itemsrc')->where($conditions)->get();
       } catch (QueryException $e) {
         return response()->json(['error' => "it screwed up"], 404);
       }

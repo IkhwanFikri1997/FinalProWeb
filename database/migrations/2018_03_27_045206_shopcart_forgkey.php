@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MakeForeignKeys extends Migration
+class ShopcartForgkey extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class MakeForeignKeys extends Migration
      */
     public function up()
     {
-      Schema::table('items', function($table){
-        $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-      });
+        Schema::table('bills', function($table){
+          $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+        });
 
-      Schema::table('transactions', function($table){
-        $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
-      });
+        Schema::table('transactions', function($table){
+          $table->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
+        });
     }
 
     /**

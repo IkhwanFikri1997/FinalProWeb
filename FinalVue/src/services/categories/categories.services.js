@@ -12,7 +12,7 @@ export default {
         return y.$http.post(this.url +'/add', params);
     },
     delete(y,id){
-        return y.$http.get(this.url + '/delcat' + '/' + id);
+        return y.$http.delete(this.url + '/del' + '/' + id);
     },
     update(y, id, params){
         return y.$http.post(this.url + '/changecat', params);

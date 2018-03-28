@@ -11,6 +11,7 @@ class itemController extends Controller
 {
     public function __construct(Item $item){
       $this->item = $item;
+      //$this->middleware('auth:api', ['except' => ['index']]);
     }
 
     /**
@@ -151,14 +152,14 @@ class itemController extends Controller
 
     function itemByCat($id){
         try{
-          $array = array();
-          $array['data'] = Category::with('items')->where('id', $id)->get();
+          $data = array();
+          $data['data'] = Category::with('items')->where('id', $id)->get();
         }catch (QueryException $a){
             return response()->json(["Error" => "not found"], 404);
         }
 
         if(count($data) > 0){
-            return response()->json($array);
+            return response()->json($data);
         }else{
             return response()->json(["Error" => "not found"], 404);
         }

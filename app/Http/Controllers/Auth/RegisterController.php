@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class RegisterController extends Controller
 {
@@ -87,12 +88,21 @@ class RegisterController extends Controller
      */
     protected function create(Request $data)
     {
-        return User::create([
+
+      try{
+          $arr['data'] = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone_num' => $data['phone_num'],
             'address' => $data['address']
         ]);
+
+        return response()->json($arr);
+      }
+      catch(QueryException $a){
+        return response()->json(["Error" => "something missing"], 404);
+      }
+
     }
 }
