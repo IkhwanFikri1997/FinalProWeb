@@ -37,12 +37,21 @@ export default {
                     res => {
                         this.users.push(Operator.single(userModel, res.body.data));
                         this.user = Operator.reset(userModel);
+                        localStorage.setItem('token',res.body.data.token);
+                        localStorage.setItem('id',res.body.data.id);
+                        localStorage.removeItem('admin');
+                        localStorage.setItem('admin',res.body.data.admin)
+
+                        alert(localStorage.getItem('admin'));
                     },
-                    err => {
-                        this.$refs.toast.setMessage('Error store user, check your user input again.');
-                        this.$refs.toast.show();
-                    }
                 )
-        } 
+                .catch(
+                    (error) => console.log(error)
+                )
+        },
+        Logout() {
+            localStorage.removeItem('token');
+            alert(localStorage.removeItem('token'));
+        }
     }
 }

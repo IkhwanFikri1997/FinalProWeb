@@ -34,6 +34,8 @@ export default {
                     res => {
                         this.users.push(Operator.single(userModel, res.body.data));
                         this.user = Operator.reset(userModel);
+
+                        this.$router.push({ path: '/user'})
                     },
                     err => {
                         this.$refs.toast.setMessage('Error store user, check your user input again.');

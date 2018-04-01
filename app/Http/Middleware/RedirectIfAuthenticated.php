@@ -18,7 +18,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return redirect('/home');
         }
 
         return $next($request);

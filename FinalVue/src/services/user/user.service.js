@@ -1,20 +1,23 @@
 import Config from '../config';
 
 export default {
-    url: Config.api + '/user',
-    fetch(y){
-        return y.$http.get(this.url);
+    url: Config.api + '/auth',
+    show(y){
+        return y.$http.get(this.url +'/show');
     },
-    find(y, id){
-        return y.$http.get(this.url + '/' + id);
+    logout(y){
+        return y.$http.get(this.url + '/logout');
     },
-    store(y, params){
-        return y.$http.post(this.url, params);
+    login(y, params){
+        return y.$http.post(this.url + '/login', params);
     },
-    delete(y,id){
-        return y.$http.delete(this.url + '/' + id);
+    refresh(y,id){
+        return y.$http.post(this.url + '/refresh');
     },
-    update(y, id, params){
-        return y.$http.patch(this.url + '/' + id, params);
+    register(y, params){
+        return y.$http.post(this.url + '/register', params);
+    },
+    me(y, params){
+        return y.$http.post(this.url + '/me');
     }
 }

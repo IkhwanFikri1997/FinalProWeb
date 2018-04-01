@@ -15,6 +15,6 @@ export default {
         return y.$http.delete(this.url + '/del' + id);
     },
     update(y, id, params){
-        return y.$http.put(this.url + '/change' + id, params);
+        return y.$http.post(this.url + '/change' + id, params);
     }
 }

@@ -18,6 +18,7 @@ class MakeForeignKeys extends Migration
       });
 
       Schema::table('transactions', function($table){
+        $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
         $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
       });
     }
