@@ -15,7 +15,7 @@
                             </p>
                             <form role="form" @submit.prevent="storeUser()">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Categories Name" required v-model="category.name">
+                                    <input type="text" class="form-control" placeholder="Categories Name" required v-model="item.name">
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Create Categories</button>
@@ -27,13 +27,13 @@
             </div>
         </div>
         <loading-panel message="Fetch users from server"
-                       v-if="categoryConfig.loading && !categoryConfig.error">
+                       v-if="itemConfig.loading && !itemConfig.error">
         </loading-panel>
         <error-panel message="Failed fetch users from server"
-                     v-if="!categoryConfig.loading && categoryConfig.error"
+                     v-if="!itemConfig.loading && itemConfig.error"
                      @onErrorHandled="bindUsers()">
         </error-panel>
-        <div class="row" v-if="!categoryConfig.loading && !categoryConfig.error">
+        <div class="row" v-if="!itemConfig.loading && !itemConfig.error">
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -47,20 +47,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="category in categories" v-bind:key="category.id">
-                            <td class="text-center">{{  category.id }}</td>
+                        <tr v-for="item in categories" v-bind:key="item.id">
+                            <td class="text-center">{{ item.id }}</td>
+                            <td class="text-center">{{ item.category_id }} </td>
                             <td class="text-center">
-                                <span v-if="!category.onedit">{{ category.name }}</span>
-                                <input type="text" class="form-control" v-model="category.name" v-if="category.onedit" placeholder="category Name">
+                                <span v-if="!item.onedit">{{ item.name }}</span>
+                                <input type="text" class="form-control" v-model="item.name" v-if="item.onedit" placeholder="item Name">
                             </td>
-                            <td class="text-center">{{ category.created_at }}</td>
-                            <td class="text-center">{{ category.updated_at }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-success" v-if="!category.onedit" @click="editUser(category)">Edit</button>
-                                <button type="button" class="btn btn-sm btn-success" v-if="category.onedit"
-                                        :disabled="category.name == ''"
-                                        @click="updateUser(category)">Save</button>
-                                <button type="button" class="btn btn-sm btn-danger" @click="deleteUser(category)">Del</button>
+                                <span v-if="!item.onedit">{{ item.desc }}</span>
+                                <input type="text" class="form-control" v-model="item.desc" v-if="item.onedit" placeholder="item description">
+                            </td>
+                            <td class="text-center">{{ item.created_at }}</td>
+                            <td class="text-center">{{ item.updated_at }}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-success" v-if="!item.onedit" @click="editUser(item)">Edit</button>
+                                <button type="button" class="btn btn-sm btn-success" v-if="item.onedit"
+                                        :disabled="item.name == ''"
+                                        @click="updateUser(item)">Save</button>
+                                <button type="button" class="btn btn-sm btn-danger" @click="deleteUser(item)">Del</button>
                             </td>
                         </tr>
                         </tbody>

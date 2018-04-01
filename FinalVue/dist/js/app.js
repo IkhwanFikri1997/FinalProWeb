@@ -16183,24 +16183,42 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _vm._m(0)
-	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', [_c('div', {
 	    staticClass: "container"
 	  }, [_c('div', {
 	    staticClass: "row"
 	  }, [_c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.item.name),
+	      expression: "item.name"
+	    }],
 	    staticClass: "form-control",
 	    attrs: {
 	      "type": "text",
-	      "name": "searchbar"
+	      "name": "searchbar",
+	      "required": ""
+	    },
+	    domProps: {
+	      "value": (_vm.item.name)
+	    },
+	    on: {
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.$set(_vm.item, "name", $event.target.value)
+	      }
 	    }
 	  }), _c('br'), _vm._v(" "), _c('button', {
 	    staticClass: "btn btn-default",
 	    attrs: {
 	      "type": "submit"
 	    }
-	  }, [_vm._v("Search")]), _c('br')])])])
+	  }, [_vm._v("Search")]), _c('br')]), _vm._v(" "), _vm._m(0)])])
+	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "row"
+	  }, [_c('div')])
 	}]}
 	if (false) {
 	  module.hot.accept()
@@ -18048,8 +18066,8 @@
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (_vm.category.name),
-	      expression: "category.name"
+	      value: (_vm.item.name),
+	      expression: "item.name"
 	    }],
 	    staticClass: "form-control",
 	    attrs: {
@@ -18058,19 +18076,19 @@
 	      "required": ""
 	    },
 	    domProps: {
-	      "value": (_vm.category.name)
+	      "value": (_vm.item.name)
 	    },
 	    on: {
 	      "input": function($event) {
 	        if ($event.target.composing) { return; }
-	        _vm.$set(_vm.category, "name", $event.target.value)
+	        _vm.$set(_vm.item, "name", $event.target.value)
 	      }
 	    }
-	  })]), _vm._v(" "), _vm._m(1)])])])])])]), _vm._v(" "), (_vm.categoryConfig.loading && !_vm.categoryConfig.error) ? _c('loading-panel', {
+	  })]), _vm._v(" "), _vm._m(1)])])])])])]), _vm._v(" "), (_vm.itemConfig.loading && !_vm.itemConfig.error) ? _c('loading-panel', {
 	    attrs: {
 	      "message": "Fetch users from server"
 	    }
-	  }) : _vm._e(), _vm._v(" "), (!_vm.categoryConfig.loading && _vm.categoryConfig.error) ? _c('error-panel', {
+	  }) : _vm._e(), _vm._v(" "), (!_vm.itemConfig.loading && _vm.itemConfig.error) ? _c('error-panel', {
 	    attrs: {
 	      "message": "Failed fetch users from server"
 	    },
@@ -18079,7 +18097,7 @@
 	        _vm.bindUsers()
 	      }
 	    }
-	  }) : _vm._e(), _vm._v(" "), (!_vm.categoryConfig.loading && !_vm.categoryConfig.error) ? _c('div', {
+	  }) : _vm._e(), _vm._v(" "), (!_vm.itemConfig.loading && !_vm.itemConfig.error) ? _c('div', {
 	    staticClass: "row"
 	  }, [_c('div', {
 	    staticClass: "col-md-12"
@@ -18087,59 +18105,84 @@
 	    staticClass: "table-responsive"
 	  }, [_c('table', {
 	    staticClass: "table table-striped"
-	  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.categories), function(category) {
+	  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.categories), function(item) {
 	    return _c('tr', {
-	      key: category.id
+	      key: item.id
 	    }, [_c('td', {
 	      staticClass: "text-center"
-	    }, [_vm._v(_vm._s(category.id))]), _vm._v(" "), _c('td', {
+	    }, [_vm._v(_vm._s(item.id))]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [(!category.onedit) ? _c('span', [_vm._v(_vm._s(category.name))]) : _vm._e(), _vm._v(" "), (category.onedit) ? _c('input', {
+	    }, [_vm._v(_vm._s(item.category_id) + " ")]), _vm._v(" "), _c('td', {
+	      staticClass: "text-center"
+	    }, [(!item.onedit) ? _c('span', [_vm._v(_vm._s(item.name))]) : _vm._e(), _vm._v(" "), (item.onedit) ? _c('input', {
 	      directives: [{
 	        name: "model",
 	        rawName: "v-model",
-	        value: (category.name),
-	        expression: "category.name"
+	        value: (item.name),
+	        expression: "item.name"
 	      }],
 	      staticClass: "form-control",
 	      attrs: {
 	        "type": "text",
-	        "placeholder": "category Name"
+	        "placeholder": "item Name"
 	      },
 	      domProps: {
-	        "value": (category.name)
+	        "value": (item.name)
 	      },
 	      on: {
 	        "input": function($event) {
 	          if ($event.target.composing) { return; }
-	          _vm.$set(category, "name", $event.target.value)
+	          _vm.$set(item, "name", $event.target.value)
 	        }
 	      }
 	    }) : _vm._e()]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [_vm._v(_vm._s(category.created_at))]), _vm._v(" "), _c('td', {
+	    }, [(!item.onedit) ? _c('span', [_vm._v(_vm._s(item.desc))]) : _vm._e(), _vm._v(" "), (item.onedit) ? _c('input', {
+	      directives: [{
+	        name: "model",
+	        rawName: "v-model",
+	        value: (item.desc),
+	        expression: "item.desc"
+	      }],
+	      staticClass: "form-control",
+	      attrs: {
+	        "type": "text",
+	        "placeholder": "item description"
+	      },
+	      domProps: {
+	        "value": (item.desc)
+	      },
+	      on: {
+	        "input": function($event) {
+	          if ($event.target.composing) { return; }
+	          _vm.$set(item, "desc", $event.target.value)
+	        }
+	      }
+	    }) : _vm._e()]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [_vm._v(_vm._s(category.updated_at))]), _vm._v(" "), _c('td', {
+	    }, [_vm._v(_vm._s(item.created_at))]), _vm._v(" "), _c('td', {
 	      staticClass: "text-center"
-	    }, [(!category.onedit) ? _c('button', {
+	    }, [_vm._v(_vm._s(item.updated_at))]), _vm._v(" "), _c('td', {
+	      staticClass: "text-center"
+	    }, [(!item.onedit) ? _c('button', {
 	      staticClass: "btn btn-sm btn-success",
 	      attrs: {
 	        "type": "button"
 	      },
 	      on: {
 	        "click": function($event) {
-	          _vm.editUser(category)
+	          _vm.editUser(item)
 	        }
 	      }
-	    }, [_vm._v("Edit")]) : _vm._e(), _vm._v(" "), (category.onedit) ? _c('button', {
+	    }, [_vm._v("Edit")]) : _vm._e(), _vm._v(" "), (item.onedit) ? _c('button', {
 	      staticClass: "btn btn-sm btn-success",
 	      attrs: {
 	        "type": "button",
-	        "disabled": category.name == ''
+	        "disabled": item.name == ''
 	      },
 	      on: {
 	        "click": function($event) {
-	          _vm.updateUser(category)
+	          _vm.updateUser(item)
 	        }
 	      }
 	    }, [_vm._v("Save")]) : _vm._e(), _vm._v(" "), _c('button', {
@@ -18149,7 +18192,7 @@
 	      },
 	      on: {
 	        "click": function($event) {
-	          _vm.deleteUser(category)
+	          _vm.deleteUser(item)
 	        }
 	      }
 	    }, [_vm._v("Del")])])])

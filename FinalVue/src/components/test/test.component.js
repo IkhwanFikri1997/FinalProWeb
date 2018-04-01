@@ -1,7 +1,7 @@
 import Operator from '../../utils/model/operator/index';
 
-import categoryModel from '../../models/categories/categories.model.js';
-import categoryService from '../../services/categories/categories.services.js';
+import itemModel from '../../models/items/items.model.js';
+import itemService from '../../services/items/items.services.js';
 
 import LoadingPanel from '../commons/loading-panel/loading-panel.common.vue';
 import ErrorPanel from '../commons/error-panel/error-panel.common.vue';
@@ -17,12 +17,12 @@ export default {
         return {
             message: 'User Page',
             description: 'Manage list of users at this page.',
-            categoryConfig: {
+            itemConfig: {
                 loading: true,
                 error: false
             },
-            category: categoryModel,
-            categories: []
+            item: itemModel,
+            items: []
         }
     },
     mounted() {
@@ -30,27 +30,27 @@ export default {
     },
     methods: {
         bindUsers() {
-            this.categoryConfig.loading = true;
-            this.categoryConfig.error = false;
+            this.itemConfig.loading = true;
+            this.itemConfig.error = false;
 
-            categoryService.fetch(this)
+            itemService.fetch(this)
                 .then(
                     res => {
-                        this.categories = Operator.map(categoryModel, res.body.data);
-                        this.categoryConfig.loading = false;
+                        this.items = Operator.map(itemModel, res.body.data);
+                        this.itemConfig.loading = false;
                     },
                     err => {
-                        this.categoryConfig.loading = false;
-                        this.categoryConfig.error = true;
+                        this.itemConfig.loading = false;
+                        this.itemConfig.error = true;
                     }
                 );
         },
         storeUser() {
-            categoryService.store(this, this.category)
+            itemService.store(this, this.item)
                 .then(
                     res => {
-                        this.categories.push(Operator.single(categoryModel, res.body.data));
-                        this.category = Operator.reset(categoryModel);
+                        this.items.push(Operator.single(itemModel, res.body.data));
+                        this.item = Operator.reset(itemModel);
                     },
                     err => {
                         this.$refs.toast.setMessage('Error store user, check your user input again.');
@@ -58,11 +58,11 @@ export default {
                     }
                 )
         },
-        deleteUser(category) {
-            categoryService.delete(this, category.id)
+        deleteUser(item) {
+            itemService.delete(this, item.id)
                 .then(
                     res => {
-                        this.categories.splice(this.categories.indexOf(category), 1);
+                        this.items.splice(this.items.indexOf(item), 1);
                     },
                     err => {
                         this.$refs.toast.setMessage('Error delete user');
@@ -70,14 +70,14 @@ export default {
                     }
                 )
         },
-        editUser(category) {
-            this.categories[this.categories.indexOf(category)].onedit = true;
+        editUser(item) {
+            this.items[this.items.indexOf(item)].onedit = true;
         },
-        updateUser(category) {
-            categoryService.update(this, category.id, category)
+        updateUser(item) {
+            itemService.update(this, item.id, item)
                 .then(
                     res => {
-                        this.categories[this.categories.indexOf(category)].onedit = false;
+                        this.items[this.items.indexOf(item)].onedit = false;
                     },
                     err => {
                         this.$refs.toast.setMessage('Error update user');
