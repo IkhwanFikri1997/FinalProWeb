@@ -10,6 +10,7 @@ class catController extends Controller
 {
   public function __construct(Category $category){
     $this->category = $category;
+    $this->middleware('auth:api', ['except' => ['index','show']]);
   }
 
     /**
@@ -45,6 +46,10 @@ class catController extends Controller
       ];
 
       try{
+        if ($request->header('admin') != "true") {
+          return response()->json(["Error" => "not worthy"], 401);
+        }
+
         $data['data'] = $this->category->create($newStuff);
         return response()->json($data);
       }
@@ -84,6 +89,9 @@ class catController extends Controller
       $newStuff = [
         "name" => $request->name
       ];
+      if ($request->header('admin') != "true") {
+        return response()->json(["Error" => "not worthy"], 401);
+      }
 
       try{
         $this->category->where('id',$id)->update($newStuff);
@@ -102,6 +110,10 @@ class catController extends Controller
     public function destroy($id)
     {
       try{
+        if ($request->header('admin') != "true") {
+          return response()->json(["Error" => "not worthy"], 401);
+        }
+
         $data = $this->category->where("id",$id)->delete();
       }
       catch(QueryException $a){

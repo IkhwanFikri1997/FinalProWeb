@@ -1,0 +1,89 @@
+*{
+  font-family: "Segoe UI", Helvetica, sans-serif;
+}
+
+.footer {
+  color: white;
+  background-color: black;
+  height: 10%;
+  padding-bottom: 2%;
+}
+
+.add-gutter-top{
+  margin-top: 8px;
+}
+
+.banner{
+  margin-top: 50px;
+}
+
+.black {
+  color: black;
+}
+
+.left-floating{
+  position: fixed;
+  top: 15%;
+  padding: 15px;
+  width: 10%;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.left-floating li{
+  position: relative;
+  background: #ffff00;
+  padding: 5px 20px;
+  margin-bottom: 5px;
+  left: -220px;
+  z-index: 9999;
+  width: 150px;
+  -webkit-transition: 0.5s;
+}
+
+.left-floating li:hover{
+  background: #FF6347;
+  left: 0px;
+}
+
+
+.backheader {
+  width: 100%;
+  height: auto;
+}
+
+#transcart {
+    
+    width: 100%;
+}
+
+#transcart td, #transcart th {
+    border: 2px solid white;
+    padding: 10px;
+}
+
+#transcart tr:nth-child(even){background-color: silver;}
+
+#transcart tr:hover {background-color: gray;}
+
+#transcart th {
+    background-color: black;
+    color: white;
+}
+
+#myCarousel
+{
+  min-height: 400px;
+}
+
+#color
+{
+  color: #ffff00;
+  padding-left: 20px;
+}
+
+.title
+{
+  font-size: 80px;
+  text-align: center;
+}

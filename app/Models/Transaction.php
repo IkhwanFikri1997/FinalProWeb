@@ -25,6 +25,10 @@ class Transaction extends Model
   public function itemsrc(){
     return $this->belongsTo("App\Models\Item","item_id");
   }
+  /*
+  public function billsrc(){
+    return $this->belongsTo("App\Models\Bill","bill_id");
+  }*/
   public function customersrc(){
     return $this->belongsTo("App\User","customer_id");
   }

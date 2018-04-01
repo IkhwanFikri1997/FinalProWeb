@@ -1,9 +1,6 @@
 <template>
-  <div class="wrapper">
-      <div class="container">
-        <div class="row">
-          	<div class="col">
-      			<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="wrapper">      
+      			<nav class="navbar navbar-inverse navbar-fixed-top">
         			<div class="container-fluid">
           				<div class="navbar-header">
             				<a class="navbar-brand" href="#">WebSiteName</a>
@@ -20,12 +17,20 @@
             				<li><router-link to="/login">Log In</router-link></li>
           				</ul>
         			</div>
-        		</div>
-        		<div class="clearfix"></div>
-      		</div>
-      	</div>
-     	<div class="row banner">
-          <div class="col">
+              <div class="row">
+                <div class="col">
+                <div class="left-floating">
+                  <ul class="list-unstyled">
+                    <li><a href="#">Wearable</a></li>
+                    <li><a href="#">Cutlery</a></li>
+                    <li><a href="#">Utensils</a></li>
+                    <li><a href="#">Electronics</a></li>
+                  </ul>
+                  </div>
+                </div>
+              </div>
+        		</nav>
+        		<div class="clearfix"></div>	
             <div id="myCarousel" class="carousel slide">
               <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -60,23 +65,6 @@
                   <span class="sr-only">Next</span>
               </a>
           	</div>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-        <div class="left-floating">
-          <ul class="list-unstyled">
-            <li><a href="#">Wearable</a></li>
-            <li><a href="#">Cutlery</a></li>
-            <li><a href="#">Utensils</a></li>
-            <li><a href="#">Electronics</a></li>
-          </ul>
-          </div>
-        </div>
-      </div>
     <main>
         <router-view></router-view>
     </main>
@@ -118,3 +106,6 @@
     </footer>
   </div>
 </template>
+
+@import "~styles/app.scss";
+<script src="./app.component.js"></script>

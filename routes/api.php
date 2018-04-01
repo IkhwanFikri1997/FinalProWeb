@@ -26,7 +26,7 @@ Route::group([
 ], function () {
     Route::get('show', 'AuthController@show');
     Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
+    Route::get('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     Route::post('register','Auth\RegisterController@create');
@@ -57,6 +57,18 @@ Route::group([
     Route::post("/change/{id}","catController@update");
     Route::delete("/del/{id}","catController@destroy");
 });
+/*
+Route::group([
+  'prefix'=>'bill'
+],function(){
+  Route::get("/get","billController@index");
+  //Route::get("/get/{id}","billController@show");
+  Route::post("/add","billController@store");
+  Route::post("/change/{id}","billController@update");
+  Route::delete("/del/{id}","billController@destroy");
+
+  Route::get("/get/{id}","billController@print");
+});*/
 
 Route::group([
   'prefix'=>'trans'
@@ -68,6 +80,6 @@ Route::post("/add","transController@store");
 Route::post("/change/{id}","transController@update");
 Route::delete("/del/{id}","transController@destroy");
 
-Route::get("/bill/{cust_id}/{item_id}","transController@subtotal");
-Route::get("/bill/{cust_id}","transController@printBill");
+//Route::get("/bill/{cust_id}/{item_id}","transController@subtotal");
+Route::get("/bill/{bill_id}","transController@printBill");
 });

@@ -27,12 +27,9 @@ export default {
             users: []
         }
     },
-    mounted() {
-        this.bindUsers();
-    },
     methods: {
-        Login() {
-            userService.store(this, this.user)
+        LogIn() {
+            userService.login(this, this.user)
                 .then(
                     res => {
                         this.users.push(Operator.single(userModel, res.body.data));
@@ -40,7 +37,7 @@ export default {
                         localStorage.setItem('token',res.body.data.token);
                         localStorage.setItem('id',res.body.data.id);
                         localStorage.removeItem('admin');
-                        localStorage.setItem('admin',res.body.data.admin)
+                        localStorage.setItem('admin',res.body.data.admin);
 
                         alert(localStorage.getItem('admin'));
                     },
@@ -50,8 +47,13 @@ export default {
                 )
         },
         Logout() {
-            localStorage.removeItem('token');
-            alert(localStorage.removeItem('token'));
+            userService.logout()
+            .then(
+                res => {
+                    localStorage.removeItem('token');
+                    alert(localStorage.removeItem('token'));
+                }
+            )
         }
     }
 }

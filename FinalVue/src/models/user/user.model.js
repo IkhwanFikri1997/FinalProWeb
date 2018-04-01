@@ -3,7 +3,7 @@ export default {
     name: '',
     email: '',
     password: '',
-    phone_num: null,
+    phone_num: '',
     address: '',
     remember_token: ''
 }

@@ -44,8 +44,19 @@ export default {
                         this.itemConfig.error = true;
                     }
                 );
-            
-            
+        },
+        searchItems(){
+            itemService.search(this, category.item, this.category)
+            .then(
+                res => {
+                    this.categories = Operator.map(itemModel, res.body.data.item);
+                    this.itemConfig.loading = false;
+                },
+                err => {
+                    this.itemConfig.loading = false;
+                    this.itemConfig.error = true;
+                }
+            )
         }        
     }
 }

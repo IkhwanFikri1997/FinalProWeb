@@ -1,7 +1,9 @@
 import Operator from '../../utils/model/operator/index';
 
-import itemModel from '../../models/items/items.model.js';
+import itemModel from '../../models/item/item.model.js';
 import itemService from '../../services/items/items.services.js';
+import categoryModel from '../../models/categories/categories.model.js';
+import categoryService from '../../services/categories/categories.services.js';
 
 import LoadingPanel from '../commons/loading-panel/loading-panel.common.vue';
 import ErrorPanel from '../commons/error-panel/error-panel.common.vue';
@@ -15,17 +17,24 @@ export default {
     },
     data() {
         return {
-            message: 'User Page',
-            description: 'Manage list of users at this page.',
+            message: 'Item Page',
+            description: 'Manage list of items at this page.',
             itemConfig: {
                 loading: true,
                 error: false
             },
             item: itemModel,
-            items: []
+            items: [],
+            categoryConfig: {
+                loading: true,
+                error: false
+            },
+            category: categoryModel,
+            categories: []
         }
     },
     mounted() {
+        this.bindItem();
         this.bindUsers();
     },
     methods: {
@@ -42,6 +51,22 @@ export default {
                     err => {
                         this.itemConfig.loading = false;
                         this.itemConfig.error = true;
+                    }
+                );
+        },
+        bindItem(){
+            this.categoryConfig.loading = true;
+            this.categoryConfig.error = false;
+
+            categoryService.fetch(this)
+                .then(
+                    res => {
+                        this.categories = Operator.map(categoryModel, res.body.data);
+                        this.categoryConfig.loading = false;
+                    },
+                    err => {
+                        this.categoryConfig.loading = false;
+                        this.categoryConfig.error = true;
                     }
                 );
         },

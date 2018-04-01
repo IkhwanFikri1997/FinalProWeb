@@ -11,6 +11,7 @@ class itemController extends Controller
 {
     public function __construct(Item $item){
       $this->item = $item;
+      $this->middleware('auth:api', ['except' => ['index','show','search','itemByCat']]);
     }
 
     /**
@@ -41,6 +42,10 @@ class itemController extends Controller
      */
     public function store(Request $request)
     {
+      if ($request->header('admin') != "true") {
+        return response()->json(["Error" => "not worthy"], 401);
+      }
+
       $newStuff = [
         "category_id" => $request->category_id,
         "name" => $request->name,
@@ -56,7 +61,7 @@ class itemController extends Controller
         return response()->json($array);
       }
       catch(QueryException $a){
-        return response()->json(["Error" => "it screwed up"], 404);
+        return response()->json(["Error" => $a], 404);
       }
     }
 
@@ -118,6 +123,9 @@ class itemController extends Controller
       if(isset($request->stock)) $newStuff["stock"] = $request->stock;
 
       try{
+        if ($request->header('admin') != "true") {
+          return response()->json(["Error" => "not worthy"], 401);
+        }
         $data = $this->item->where("id",$id)->update($newStuff);
         //return response()->json($data);
       }
@@ -132,9 +140,12 @@ class itemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
       try{
+        if ($request->header('admin') != "true") {
+          return response()->json(["Error" => "not worthy"], 401);
+        }
         $data = $this->item->where("id",$id)->delete();
       }
       catch(QueryException $a){
@@ -151,14 +162,14 @@ class itemController extends Controller
 
     function itemByCat($id){
         try{
-          $array = array();
-          $array['data'] = Category::with('items')->where('id', $id)->get();
+          $data = array();
+          $data['data'] = Category::with('items')->where('id', $id)->get();
         }catch (QueryException $a){
             return response()->json(["Error" => "not found"], 404);
         }
 
         if(count($data) > 0){
-            return response()->json($array);
+            return response()->json($data);
         }else{
             return response()->json(["Error" => "not found"], 404);
         }

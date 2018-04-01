@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         register() {
-            userService.store(this, this.user)
+            userService.register(this, this.user)
                 .then(
                     res => {
                         this.users.push(Operator.single(userModel, res.body.data));

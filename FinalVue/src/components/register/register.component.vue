@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="margin-top:5px; margin-left:2%;">
+  <div class="container">
     <toast ref="toast"></toast>
       <div class="row">
         <div class="col-md-offset-4"></div>
@@ -10,8 +10,8 @@
             <input type="text" name="name" id="name" placeholder="Your Name" class="form-control" required v-model="user.name"><br>
             <input type="email" name="email" id="email" placeholder="Your Email" class="form-control" required v-model="user.email"> <br>
             <input type="password" name="password" id="password" placeholder="Your password" class="form-control" required v-model="user.password"><br>
-            <input type="number" name="phone_num" id="phone_num" placeholder="Your Phone Number" class="form-control" required v-model="user.phone_num"><br>
-            <input type="text" name="address" id="address" placeholder="Your Phone Number" class="form-control" required v-model="user.address"><br>
+            <input type="text" name="phone_num" id="phone_num" placeholder="Your Phone Number" class="form-control" required v-model="user.phone_num"><br>
+            <input type="text" name="address" id="address" placeholder="Your Address" class="form-control" required v-model="user.address"><br>
             <input type="submit" value="submit" class="form-control"><br>
           </form>
         </div>

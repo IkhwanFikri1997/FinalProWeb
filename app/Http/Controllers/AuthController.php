@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use User;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -29,8 +30,17 @@ class AuthController extends Controller
       if (! $token = auth()->attempt($credentials)) {
           return response()->json(['error' => 'Unauthorized'], 401);
       }
+      //return response()->json(array('data' => $this->respondWithToken($token)));
 
-      return response()->json(array('data' => $this->respondWithToken($token)));
+      $user = Auth::user();
+      $arr = array();
+      $data = [
+        'token'=>$token,
+        'id'=>$user->id,
+        'admin'=>$user->admin
+      ];
+      $arr['data'] = $data;
+      return response()->json($arr);
     }
 
     /**
@@ -81,16 +91,4 @@ class AuthController extends Controller
       ]);
     }
 
-    public function show()
-    {
-      try {
-        $data = Items::get(); //$this->users->get();
-      } catch (QueryException $e) {
-        return response()->json(['error' => "it screwed up"], 404);
-      }
-
-      if(count($data)>0){
-        return response()->json($data);
-      }return response()->json(['error' => 'Nothing found wkwkwk'], 404);
-    }
 }

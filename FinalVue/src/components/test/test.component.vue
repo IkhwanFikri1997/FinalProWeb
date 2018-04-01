@@ -15,10 +15,25 @@
                             </p>
                             <form role="form" @submit.prevent="storeUser()">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Categories Name" required v-model="item.name">
+                                    <input type="text" class="form-control" placeholder="items Name" required v-model="item.name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="items Description" required v-model="item.desc">
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" v-model="item.category_id" placeholder="Category">
+                                      <option disabled value="">Pick a category</option>
+                                      <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control" placeholder="items Price" required v-model="item.price">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control" placeholder="items Stock" required v-model="item.stock">
                                 </div>
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Create Categories</button>
+                                    <button type="submit" class="btn btn-primary">Create items</button>
                                 </div>
                             </form>
                         </div>
@@ -41,15 +56,18 @@
                         <tr>
                             <th class="text-center" style="width: 5%;">ID</th>
                             <th class="text-center" style="width: 20%;">Name</th>
+                            <th class="text-center" style="width: 20%;">Description</th>
+                            <th class="text-center" style="width: 20%;">Category</th>
+                            <th class="text-center" style="width: 20%;">Price</th>
+                            <th class="text-center" style="width: 20%;">Stock</th>
                             <th class="text-center" style="width: 20%;">Created At</th>
                             <th class="text-center" style="width: 20%;">Updated At</th>
                             <th class="text-center">...</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="item in categories" v-bind:key="item.id">
+                        <tr v-for="item in items" v-bind:key="item.id">
                             <td class="text-center">{{ item.id }}</td>
-                            <td class="text-center">{{ item.category_id }} </td>
                             <td class="text-center">
                                 <span v-if="!item.onedit">{{ item.name }}</span>
                                 <input type="text" class="form-control" v-model="item.name" v-if="item.onedit" placeholder="item Name">
@@ -57,6 +75,21 @@
                             <td class="text-center">
                                 <span v-if="!item.onedit">{{ item.desc }}</span>
                                 <input type="text" class="form-control" v-model="item.desc" v-if="item.onedit" placeholder="item description">
+                            </td>
+                            <td class="text-center">
+                                <span v-if="!item.onedit">{{ item.category_id }}</span>
+                                <select class="form-control" v-model="item.category_id" v-if="item.onedit">
+                                  <option disabled value="">choose category</option>
+                                  <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <span v-if="!item.onedit">{{ item.price }}</span>
+                                <input type="text" class="form-control" v-model="item.price" v-if="item.onedit" placeholder="item description">
+                            </td>
+                            <td class="text-center">
+                                <span v-if="!item.onedit">{{ item.stock }}</span>
+                                <input type="text" class="form-control" v-model="item.stock" v-if="item.onedit" placeholder="item description">
                             </td>
                             <td class="text-center">{{ item.created_at }}</td>
                             <td class="text-center">{{ item.updated_at }}</td>
